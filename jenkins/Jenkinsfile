@@ -45,9 +45,11 @@ stage('Remove Unused docker image') {
 
 stage('Run Container on Dev Server'){
  steps{
+script{   
      def dockerRun = 'docker run -p 8080:80 -d --name my-site annetta/site_test:latest'
+}
      sshagent(['id_rsa_ubuntu1']) {
-       sh "ssh -o StrictHostKeyChecking=no ann@192.168.0.106 ${dockerRun}"
+       sh 'ssh -o StrictHostKeyChecking=no ann@192.168.0.106 ${dockerRun}'
      }
 }
    }
