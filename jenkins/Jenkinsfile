@@ -5,7 +5,7 @@ environment {
     registryCredential = 'docker_annetta'
     dockerImage = ''
     dockerRun = "docker run -p 8080:80 -d --name my-site annetta/site_test:latest"
-clearContainers = "docker container stop $(docker ps -q --filter "name=my-app" ) 2> /dev/null ; docker container rm $(docker ps -qa --filter "name=my-app" ) 2> /dev/null"
+clearContainers = 'docker container stop $(docker ps -q --filter "name=my-app" ) 2> /dev/null ; docker container rm $(docker ps -qa --filter "name=my-app" ) 2> /dev/null'
   }
 
     agent any
