@@ -1,16 +1,29 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                git branch: 'main', credentialsId: 'id_rsa_git', url: 'git@github.com:annetta1/proj1.git'
-            }
+node {    
+    def app  
+   
+    stage('Clone repository') {                   
+        git branch: 'main', credentialsId: 'id_rsa_git', url: 'git@github.com:annetta1/proj1.git'   
+      }   
+        
+    stage('Build image') {         		       
+        app = docker.build("annetta/site_test")    
+       }  
+         
+    stage('Test image') {                       
+        app.inside {            
+            sh 'echo "Tests passed"'        
+            }    
+        }            
+    stage('Push image') {
+        docker.withRegistry('https://registry.hub.docker.com', 'id_rsa_git')
+        {                   
+             pp.push("${env.BUILD_NUMBER}")            
+             app.push("latest")        
+              }    
+           }
         }
-        stage('Deploy') {
-            steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu_1', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'echo $BUILD_ID', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-            }
-        }
-    }
-}
+    stage('Deploy') {                       
+        app.inside {            
+            sh 'echo "Tests passed"'        
+            }    
+        } 
