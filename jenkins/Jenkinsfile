@@ -15,7 +15,7 @@ node {
             }    
         }            
     stage('Push image') {
-        docker.withRegistry('', 'id_rsa_git')
+        docker.withRegistry('', 'docker_annetta')
         {                   
              pp.push("${env.BUILD_NUMBER}")            
              app.push("latest")        
