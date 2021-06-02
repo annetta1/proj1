@@ -47,6 +47,11 @@ stage('Remove Unused docker image') {
 stage('Run Container on Dev Server'){
  steps{
 
+sh """ssh -tt ann@192.168.0.106 << EOF 
+    docker container stop $(docker ps -q --filter "name=my-app" ) 2> /dev/null ; docker container rm $(docker ps -qa --filter "name=my-app" ) 2> /dev/null 
+    exit
+    EOF"""
+
      sshagent(['id_rsa_ubuntu1']) {
        sh "ssh -o StrictHostKeyChecking=no ann@192.168.0.106 ${env.dockerRun}"
      }
