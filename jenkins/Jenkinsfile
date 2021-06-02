@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                git branch: 'main', credentialsId: 'id_rsa_git', url: 'git@github.com:annetta1/proj1.git'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu_1', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'echo $BUILD_ID', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
+        }
+    }
+}
