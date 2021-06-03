@@ -48,9 +48,6 @@ stage('Remove Unused docker image') {
 stage('Run Container on Dev Server'){
  steps{
 
- 
-
-
      sshagent(['id_rsa_ubuntu1']) {
 sh "ssh -o StrictHostKeyChecking=no ann@192.168.0.106 bash -c \"docker container rm -f my-site 2> /dev/null \" "
 
