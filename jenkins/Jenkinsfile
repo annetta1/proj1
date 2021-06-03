@@ -12,7 +12,7 @@ environment {
 
     stages {
         stage('Cloning Git') {
-            steps {docker ps -q --filter "name=my-site"
+            steps {
                 git branch: 'main', credentialsId: 'id_rsa_git', url: 'git@github.com:annetta1/proj1.git'
             }
         }
