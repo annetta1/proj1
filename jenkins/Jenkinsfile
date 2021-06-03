@@ -54,7 +54,7 @@ stage('Run Container on Dev Server'){
      sshagent(['id_rsa_ubuntu1']) {
        sh '''
 ssh -o StrictHostKeyChecking=no ann@192.168.0.106 
-docker container stop \\$(docker ps -aq --filter "name=my-site" ) 2> /dev/null
+docker container stop \\$(docker ps -aq --filter "name=my-site" ) 2> \\/dev\\/null
 docker run -p 8080:80 -d --name my-site annetta/site_test:latest
 '''
      }
