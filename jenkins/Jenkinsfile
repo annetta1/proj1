@@ -5,6 +5,7 @@ environment {
     registryCredential = 'docker_annetta'
     dockerImage = ''
     dockerRun = "docker run -p 8080:80 -d --name my-site annetta/site_test:latest"
+dockerRemove="docker container rm -f my-site"
 
   }
 
@@ -49,7 +50,7 @@ stage('Run Container on Dev Server'){
  steps{
 
      sshagent(['id_rsa_ubuntu1']) {
-sh "ssh -o StrictHostKeyChecking=no ann@192.168.0.106 bash -c \" docker container rm -f my-site \" " 
+sh "ssh -o StrictHostKeyChecking=no ann@192.168.0.106 ${env.dockerRemove} " 
 
 
      }
