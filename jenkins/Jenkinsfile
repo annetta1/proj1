@@ -50,7 +50,7 @@ stage('Run Container on Dev Server'){
  steps{
 
      sshagent(['id_rsa_ubuntu1']) {
-sh "ssh -o StrictHostKeyChecking=no ann@192.168.0.106 << EOF 
+sh "ssh -o StrictHostKeyChecking=no ann@192.168.0.106 << EOF \\n
 ${env.dockerRemove}
 ${env.dockerRun}" 
 EOF
